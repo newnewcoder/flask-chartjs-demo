@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title> {{ data.title }} </title>
+      <style type="text/css">
+         /* Chart.js */
+         @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+      </style>
+   </head>
+   <body>
+      <div style="display: block; width: 392px; height: 256px;">
+         <canvas id="chart"></canvas>
+      </div>
+      <div style="display: block; width: 500px; height: 500;">
+         <canvas id="pie_chart"></canvas>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+      <script>
+         $(document).ready(function() {
+            new Chart('chart', {
+                type: 'line',
+                data: {
+                    labels: {{ data.labels }},
+                    datasets: [{
+                        backgroundColor: '#ffffff',
+                        borderColor: '#000000',
+                        data: {{ data.data }},
+                        label: 'label',
+                        fill: false
+                    }]
+                },
+                options: {
+                    title: {
+                        text: "{{ data.title }}",
+                        display: true
+                    },
+                    maintainAspectRatio: false,
+                    spanGaps: false,
+                    elements: {
+                        line: {
+                            tension: 0.000001
+                        }
+                    },
+                    plugins: {
+                        filler: {
+                            propagate: false
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                autoSkip: false,
+                                maxRotation: 0
+                            }
+                        }]
+                    }
+                }
+            });
+         });
+      </script>
+   </body>
+</html>
