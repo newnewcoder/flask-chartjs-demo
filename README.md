@@ -9,4 +9,4 @@ pip install -r requirements.txt
 
 go [http://localhost:5000](http://localhost:5000)
 
-![example.png](/_asset/example.png)
+![example.png](/_asset/example.gif)
