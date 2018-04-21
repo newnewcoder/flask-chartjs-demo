@@ -65,8 +65,11 @@
             setInterval(function() {
                 $.get( "/get_new_data/", function(result) {
                     var data = chart.data.datasets[0].data;
+                    var labels = chart.data.labels;
                     data.push(result.value);
                     data.shift();
+                    labels.push(labels[labels.length - 1] + 1);
+                    labels.shift();
                     chart.update();
                 });
             }, 1500);
