@@ -22,45 +22,54 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
       <script>
          $(document).ready(function() {
-            new Chart('chart', {
-                type: 'line',
-                data: {
-                    labels: {{ data.labels }},
-                    datasets: [{
-                        backgroundColor: '#ffffff',
-                        borderColor: '#000000',
-                        data: {{ data.data }},
-                        label: 'label',
-                        fill: false
-                    }]
-                },
-                options: {
-                    title: {
-                        text: "{{ data.title }}",
-                        display: true
-                    },
-                    maintainAspectRatio: false,
-                    spanGaps: false,
-                    elements: {
-                        line: {
-                            tension: 0.000001
-                        }
-                    },
-                    plugins: {
-                        filler: {
-                            propagate: false
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                autoSkip: false,
-                                maxRotation: 0
+            var chart = new Chart('chart', {
+                            type: 'line',
+                            data: {
+                                labels: {{ data.labels }},
+                                datasets: [{
+                                    backgroundColor: '#ffffff',
+                                    borderColor: '#000000',
+                                    data: {{ data.data }},
+                                    label: 'label',
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                title: {
+                                    text: "{{ data.title }}",
+                                    display: true
+                                },
+                                maintainAspectRatio: false,
+                                spanGaps: false,
+                                elements: {
+                                    line: {
+                                        tension: 0.000001
+                                    }
+                                },
+                                plugins: {
+                                    filler: {
+                                        propagate: false
+                                    }
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        ticks: {
+                                            autoSkip: false,
+                                            maxRotation: 0
+                                        }
+                                    }]
+                                }
                             }
-                        }]
-                    }
-                }
-            });
+                        });
+
+            setInterval(function() {
+                $.get( "/get_new_data/", function(result) {
+                    var data = chart.data.datasets[0].data;
+                    data.push(result.value);
+                    data.shift();
+                    chart.update();
+                });
+            }, 1500);
          });
       </script>
    </body>
